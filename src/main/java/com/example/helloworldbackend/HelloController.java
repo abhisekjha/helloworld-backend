@@ -11,9 +11,4 @@ public class HelloController {
         return "Hello from your custom Spring Boot backend and Docker!";
     }
 
-//    @GetMapping("/secret")
-//    public String getSecret() {
-//        String password = System.getenv("DB_PASSWORD");
-//        return "Secret loaded: " + (password != null ? "✅Yes" : "❌No");
-    }
 }
