@@ -14,6 +14,6 @@ public class HelloController {
     @GetMapping("/secret")
     public String getSecret() {
         String password = System.getenv("DB_PASSWORD");
-        return "Secret loaded: " + (password != null ? "✅" : "❌");
+        return "Secret loaded: " + (password != null ? "✅Yes" : "❌No");
     }
 }
