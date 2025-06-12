@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Set up Google Cloud SDK
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+
+      # Authenticate with Service Account
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # Build and Push Docker Image to Artifact Registry
+      - name: Build and Push to Artifact Registry
+        run: |
+          gcloud auth configure-docker REGION-docker.pkg.dev
+          docker build -t REGION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/REPOSITORY/helloworld-backend .
+          docker push REGION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/REPOSITORY/helloworld-backend
+
+      # Deploy to Cloud Run
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy helloworld-backend \
+            --image REGION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/REPOSITORY/helloworld-backend \
+            --region REGION \
+            --platform managed \
+            --allow-unauthenticated
