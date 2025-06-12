@@ -8,7 +8,7 @@ public class HelloController {
 
     @GetMapping("/")
     public String hello() {
-        return "Hello from your custom Spring Boot backend!\n and this is a change";
+        return "Hello from your custom Spring Boot backend and Docker!";
     }
 
     @GetMapping("/secret")
