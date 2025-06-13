@@ -23,7 +23,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.PROJECT_ID }}
-          install_components: '["gcloud"]'
+
 
       # Authenticate with Service Account
       - name: Authenticate to GCP
