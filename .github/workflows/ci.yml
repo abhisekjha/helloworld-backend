@@ -39,7 +39,7 @@ jobs:
           gcloud auth configure-docker us-docker.pkg.dev
           docker build -t $IMAGE .
           docker push $IMAGE
-    
+      
 
       # Deploy to Cloud Run
       - name: Deploy to Cloud Run
@@ -49,4 +49,5 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
-      
+          
+          
