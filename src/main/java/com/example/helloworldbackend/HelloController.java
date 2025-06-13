@@ -9,7 +9,7 @@ public class HelloController {
 
     @GetMapping("/")
     public String hello() {
-        return "Hello from your custom Spring Boot backend and Docker and Time stamp is ! " + LocalDateTime.now();
+        return "Day 2! completed and and it is working fine at ! " + LocalDateTime.now();
     }
 
 }
