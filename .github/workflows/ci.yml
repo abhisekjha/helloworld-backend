@@ -33,12 +33,16 @@ jobs:
 
       # Build and Push Docker Image to Artifact Registry
       - name: Build & push Docker image
+        env:
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
-          IMAGE="us-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/helloworld-backend:${{ github.sha }}"
+          IMAGE="us-docker.pkg.dev/$PROJECT_ID/app-repo/helloworld-backend:$GITHUB_SHA"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
           gcloud auth configure-docker us-docker.pkg.dev
-          docker build -t $IMAGE .
-          docker push $IMAGE
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
+      
       
 
       # Deploy to Cloud Run
